@@ -1,0 +1,133 @@
+body {
+  text-align: center;
+  background-color: #222;
+  color: white;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  user-select: none;
+}
+
+canvas {
+  background-color: black;
+  display: block;
+  margin: 20px auto;
+  border: 2px solid white;
+  display: none; /* Hide canvas initially */
+}
+
+.hidden {
+  display: none !important;
+}
+
+.overlay {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 320px;
+  padding: 20px;
+  background: #333;
+  border-radius: 12px;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 15px black;
+  z-index: 10;
+}
+
+.overlay h2 {
+  margin-top: 0;
+}
+
+.overlay button {
+  display: block;
+  width: 100%;
+  padding: 12px 0;
+  margin: 10px 0;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  background: #444;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.overlay button:hover,
+.overlay button:focus {
+  background: #666;
+  outline: none;
+}
+
+/* Speed control styling */
+#settingsOverlay label {
+  font-weight: bold;
+}
+
+#speedRange {
+  width: 150px;
+  vertical-align: middle;
+  margin-left: 5px;
+}
+
+/* Controls container */
+.controls {
+  position: fixed;
+  bottom: 30px;         /* vertical position */
+  right: 30px;          /* horizontal position */
+  width: 140px;
+  height: 140px;
+  user-select: none;
+  z-index: 1000;
+
+  display: grid;
+  grid-template-columns: 40px 40px 40px;
+  grid-template-rows: 40px 40px 40px;
+  gap: 10px;
+  justify-items: center;
+  align-items: center;
+}
+
+/* Arrow keys layout */
+.controls #up {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}
+
+.controls #left {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+}
+
+.controls #down {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+}
+
+.controls #right {
+  grid-column: 3 / 4;
+  grid-row: 2 / 3;
+}
+
+/* Buttons styling */
+.controls button {
+  width: 40px;
+  height: 40px;
+  background-color: #444;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  outline: none;
+}
+
+.controls button:hover,
+.controls button:active {
+  background-color: #666;
+}
+
+@media (min-width: 600px) {
+  /* Hide controls on larger screens (desktop) */
+  .controls {
+    display: none !important;
+  }
+}

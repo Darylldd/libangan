@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Snake Game</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#222" />
+</head>
+<body>
+  <h1>🐍 Snake Game</h1>
+
+  <!-- Main Menu -->
+  <div id="menuOverlay" class="overlay">
+    <h2>Main Menu</h2>
+    <button id="playBtn">Play</button>
+    <button id="customizeBtn">Customize Snake</button>
+    <button id="adjustSpeedBtn">Settings</button>
+    <button id="quitBtn">Quit</button>
+  </div>
+
+  <!-- Customize Snake Overlay -->
+  <div id="customizeOverlay" class="overlay hidden">
+    <h2>Customize Snake</h2>
+    <label for="headColor">Head Color:</label>
+    <input type="color" id="headColor" value="#00ff00" />
+    <br /><br />
+    <label for="bodyColor">Body Color:</label>
+    <input type="color" id="bodyColor" value="#008000" />
+    <br /><br />
+    <button id="customizeBackBtn">Back to Menu</button>
+  </div>
+
+  <!-- Settings Overlay (Speed + Background Upload) -->
+  <div id="settingsOverlay" class="overlay hidden">
+    <h2>Settings</h2>
+
+    <label for="speedRange">Speed: </label>
+    <input type="range" id="speedRange" min="40" max="300" value="100" step="10" />
+    <span id="speedValue">100</span> ms
+    <br /><br />
+
+    <label for="bgUploadInput">Upload background image: </label>
+    <input type="file" id="bgUploadInput" accept="image/*" />
+    <br /><br />
+
+    <button id="settingsBackBtn">Back to Menu</button>
+  </div>
+
+  <!-- Game Over Overlay -->
+  <div id="gameOverOverlay" class="overlay hidden">
+    <h2>Game Over!</h2>
+    <p>Your score: <span id="finalScore">0</span></p>
+    <button id="playAgainBtn">Play Again</button>
+    <button id="gameOverMenuBtn">Main Menu</button>
+  </div>
+
+  <canvas id="gameCanvas"></canvas>
+
+<div class="controls hidden">
+  <button id="up">⬆️</button>
+  <button id="left">⬅️</button>
+  <button id="down">⬇️</button>
+  <button id="right">➡️</button>
+</div>
+
+  <p>Use arrow keys or buttons to play!</p>
+
+  <script src="script.js"></script>
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/service-worker.js")
+      .then(() => console.log("Service Worker Registered"))
+      .catch((e) => console.error("Service Worker registration failed", e));
+  }
+</script>
+
+</body>
+</html>
