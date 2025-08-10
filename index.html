@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Snake Game</title>
-  <link rel="stylesheet" href="style.css" />
   <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#222" />
+  <meta name="theme-color" content="#222222" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <h1>🐍 Snake Game</h1>
@@ -16,65 +16,72 @@
     <h2>Main Menu</h2>
     <button id="playBtn">Play</button>
     <button id="customizeBtn">Customize Snake</button>
-    <button id="adjustSpeedBtn">Settings</button>
+    <button id="settingsBtn">Settings</button>
+    <button id="highscoresBtn">High Scores</button>
     <button id="quitBtn">Quit</button>
   </div>
 
-  <!-- Customize Snake Overlay -->
+  <!-- Customize -->
   <div id="customizeOverlay" class="overlay hidden">
     <h2>Customize Snake</h2>
-    <label for="headColor">Head Color:</label>
-    <input type="color" id="headColor" value="#00ff00" />
-    <br /><br />
-    <label for="bodyColor">Body Color:</label>
-    <input type="color" id="bodyColor" value="#008000" />
-    <br /><br />
+    <label>Head Color: <input id="headColor" type="color" value="#00ff00"></label>
+    <br/><br/>
+    <label>Body Color: <input id="bodyColor" type="color" value="#008000"></label>
+    <br/><br/>
     <button id="customizeBackBtn">Back to Menu</button>
   </div>
 
-  <!-- Settings Overlay (Speed + Background Upload) -->
+  <!-- Settings -->
   <div id="settingsOverlay" class="overlay hidden">
     <h2>Settings</h2>
-
-    <label for="speedRange">Speed: </label>
-    <input type="range" id="speedRange" min="40" max="300" value="100" step="10" />
+    <label>Speed (ms per step): 
+      <input id="speedRange" type="range" min="30" max="300" step="5" value="100">
+    </label>
     <span id="speedValue">100</span> ms
-    <br /><br />
-
-    <label for="bgUploadInput">Upload background image: </label>
-    <input type="file" id="bgUploadInput" accept="image/*" />
-    <br /><br />
-
+    <br/><br/>
+    <label>Upload Background:
+      <input id="bgUploadInput" type="file" accept="image/*">
+    </label>
+    <br/><br/>
     <button id="settingsBackBtn">Back to Menu</button>
   </div>
 
-  <!-- Game Over Overlay -->
+  <!-- High Scores -->
+  <div id="highscoresOverlay" class="overlay hidden">
+    <h2>High Scores</h2>
+    <ol id="highscoreList" style="text-align:left; padding-left:1.2rem; margin:0 0 12px 0;"></ol>
+    <p id="noScores" style="margin:0 0 12px 0;">No scores yet — play to set a high score!</p>
+    <button id="clearHighscoresBtn">Clear High Scores</button>
+    <button id="highscoresBackBtn">Back to Menu</button>
+  </div>
+
+  <!-- Game Over -->
   <div id="gameOverOverlay" class="overlay hidden">
-    <h2>Game Over!</h2>
-    <p>Your score: <span id="finalScore">0</span></p>
+    <h2>Game Over</h2>
+    <p>Score: <span id="finalScore">0</span></p>
     <button id="playAgainBtn">Play Again</button>
     <button id="gameOverMenuBtn">Main Menu</button>
   </div>
 
-  <canvas id="gameCanvas"></canvas>
+  <canvas id="gameCanvas" width="400" height="400" aria-label="Snake game canvas"></canvas>
 
-<div class="controls hidden">
-  <button id="up">⬆️</button>
-  <button id="left">⬅️</button>
-  <button id="down">⬇️</button>
-  <button id="right">➡️</button>
-</div>
+  <!-- Mobile controls -->
+  <div class="controls hidden" aria-hidden="true">
+    <button id="up">▲</button>
+    <button id="left">◀</button>
+    <button id="down">▼</button>
+    <button id="right">▶</button>
+  </div>
 
-  <p>Use arrow keys or buttons to play!</p>
+  <p class="hint">Use arrow keys or buttons to play. Install via browser menu to save to home screen.</p>
 
-  <script src="script.js"></script>
-<script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/service-worker.js")
-      .then(() => console.log("Service Worker Registered"))
-      .catch((e) => console.error("Service Worker registration failed", e));
-  }
-</script>
-
+  <script src="script.js" defer></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(() => console.log('Service Worker registered'))
+        .catch(e => console.error('SW registration failed:', e));
+    }
+  </script>
 </body>
 </html>

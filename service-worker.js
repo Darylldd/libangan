@@ -5,42 +5,47 @@ const FILES_TO_CACHE = [
   '/style.css',
   '/script.js',
   '/manifest.json',
-  // add your icons if you created them
+  '/favicon.ico',
   '/icon-192.png',
   '/icon-512.png'
 ];
 
-self.addEventListener('install', event => {
-  event.waitUntil(
+// install: cache app shell
+self.addEventListener('install', (evt) => {
+  evt.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('[ServiceWorker] Caching app shell');
-        return cache.addAll(FILES_TO_CACHE);
-      })
+      .then(cache => cache.addAll(FILES_TO_CACHE))
   );
   self.skipWaiting();
 });
 
-self.addEventListener('activate', event => {
-  console.log('[ServiceWorker] Activate');
-  event.waitUntil(
-    caches.keys().then(keyList =>
-      Promise.all(keyList.map(key => {
-        if (key !== CACHE_NAME) {
-          console.log('[ServiceWorker] Removing old cache', key);
-          return caches.delete(key);
-        }
-      }))
-    )
+// activate: cleanup
+self.addEventListener('activate', (evt) => {
+  evt.waitUntil(
+    caches.keys().then(keys => Promise.all(
+      keys.map(k => { if (k !== CACHE_NAME) return caches.delete(k); })
+    ))
   );
   self.clients.claim();
 });
 
-self.addEventListener('fetch', event => {
-  // Offline-first strategy
-  event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
+// fetch: cache-first strategy with network fallback
+self.addEventListener('fetch', (evt) => {
+  evt.respondWith(
+    caches.match(evt.request).then(cached => {
+      if (cached) return cached;
+      return fetch(evt.request).then(res => {
+        // cache new GET requests for later (optional)
+        if (evt.request.method === 'GET' && res && res.status === 200 && res.type !== 'opaque') {
+          caches.open(CACHE_NAME).then(cache => cache.put(evt.request, res.clone()));
+        }
+        return res;
+      }).catch(() => {
+        // fallback for navigation requests: return cached index.html so app can work offline
+        if (evt.request.mode === 'navigate') {
+          return caches.match('/index.html');
+        }
+      });
     })
   );
 });

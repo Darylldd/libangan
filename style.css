@@ -131,3 +131,28 @@ canvas {
     display: none !important;
   }
 }
+/* Highscore list styles */
+#highscoreList {
+  max-height: 220px;
+  overflow-y: auto;
+  margin-bottom: 12px;
+}
+#highscoreList li {
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.04);
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+#noScores {
+  color: #ddd;
+  font-size: 14px;
+}
+#clearHighscoresBtn, #highscoresBackBtn {
+  display: inline-block;
+  width: 48%;
+  margin-right: 2%;
+}
+#highscoresBackBtn {
+  margin-right: 0;
+}
